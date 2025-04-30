@@ -4,7 +4,8 @@ import Link from 'next/link'
 import React from 'react'
 import { dummyInterviews } from '../../../constants'
 import InterviewCard from '@/components/InterviewCard'
-import { getCurrentUser, getInterviewsByUserId, getLatestInterviews } from '@/lib/actions/auth.action'
+import { getCurrentUser } from '@/lib/actions/auth.action'
+import { getInterviewsByUserId, getLatestInterviews } from '@/lib/actions/general.action'
 
 const Page = async () => {
 
@@ -46,7 +47,13 @@ const Page = async () => {
           {/* <p>You haven't taken any interviews yet</p> */}
           {hasPastInterviews? (
             userInterviews?.map((interview) =>(
-              <InterviewCard {...interview} key={interview.id} />
+              <InterviewCard key={interview.id}
+              userId={user?.id}
+              interviewId={interview.id}
+              role={interview.role}
+              type={interview.type}
+              techstack={interview.techstack}
+              createdAt={interview.createdAt} />
             ))):( <p>You haven't taken any interviews yet</p>)}
 
         </div>
@@ -59,7 +66,13 @@ const Page = async () => {
         {/* <p>You haven't taken any interviews yet</p> */}
         {hasUpcomingInterviews? (
             latestInterviews?.map((interview) =>(
-              <InterviewCard {...interview} key={interview.id} />
+              <InterviewCard key={interview.id}
+              userId={user?.id}
+              interviewId={interview.id}
+              role={interview.role}
+              type={interview.type}
+              techstack={interview.techstack}
+              createdAt={interview.createdAt} />
             ))):( <p>There are no interviews available</p>)}
        </div>
     </section>

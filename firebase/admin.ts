@@ -5,11 +5,7 @@ import { getAuth } from 'firebase-admin/auth'
 const initFirebaseAdmin = () =>{
     const apps = getApps();
 
-    console.log("idd",process.env.FIREBASE_PROJECT_ID)
 
-
-    console.log(" emial",process.env.FIREBASE_CLIENT_EMAIL );
-    console.log("private key",process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n") )
 
     if( !apps.length){
         initializeApp({
