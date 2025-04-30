@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../../firebase/client"
 import { signIn, signUp } from "@/lib/actions/auth.action"
+import { useState } from "react"
 
 
 
@@ -50,9 +51,13 @@ const AuthForm = ({type}: {type: FormType}) => {
         },
       })
      
+      const [ loading, setLoading] = useState(false);
+
       // 2. Define a submit handler.
      async function onSubmit(values: z.infer<typeof formSchema>) {
               try {
+                setLoading(true);
+
                 if( type === 'sign-up')
                 {
                   const { name, email, password } = values;
@@ -98,6 +103,8 @@ const AuthForm = ({type}: {type: FormType}) => {
               } catch (error) {
                  console.log(error);
                  toast.error(`There was an error: ${error}`)
+              } finally{
+                setLoading(true)
               }
       }
 
@@ -142,7 +149,37 @@ const AuthForm = ({type}: {type: FormType}) => {
           />
         
        
-        <Button className="btn" type="submit">{ isSignIn ? 'Sign in' : 'Create an Account'}</Button>
+        {/* <Button className="btn" type="submit" disabled={loading}>{ isSignIn ? 'Sign in' : 'Create an Account'}</Button> */}
+
+        <Button className="btn" type="submit" disabled={loading}>
+  {loading ? (
+    <>
+      <svg
+        className="animate-spin h-4 w-4 mr-2 inline-block text-white"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+          fill="none"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        />
+      </svg>
+      Loading...
+    </>
+  ) : (
+    isSignIn ? 'Sign in' : 'Create an Account'
+  )}
+</Button>
+
       </form>
     </Form>
 
