@@ -310,6 +310,7 @@
   @apply bg-gradient-to-b from-[#540527] to-[#08090D];
 }
 
+
 @utility blue-gradient {
   @apply bg-gradient-to-l from-[#FFFFFF] to-[#CAC5FE];
 }
